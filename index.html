@@ -12,9 +12,6 @@
   </head>
   <body>
     <header>
-      <!-- TODO(liautaud): Slideshow of tweets or hashtags bubbling up. -->
-      <!-- TODO(liautaud): Correct numbering of figures. -->
-      <!-- TODO(liautaud): Replace images with Chart.js graphs. -->
       <div class="centered">
         <h1>Understanding Virality</h1>
         <h2>An analysis of Twitter hashtags and how they spread.</h2>
@@ -49,8 +46,6 @@
         </figure>
 
         <p>If we look at the distribution from Figure 2, we can see that the exposure of hashtags follows a <a href="#">log-normal distribution</a>, which is often found when modeling human interactions. In particular, we can see that the majority of hashtags in our sample are seen between 100 and 10,000 times, while a little less than 25,000 hashtags are seen more than ten million times.</p>
-
-        <!-- TODO(liautaud): Investigate the correlation between exposure and follower count, plus between exposure and number of occurences. -->
 
         <p>By looking at which alphabet is used in hashtags, we can find some interesting figures regarding the parts of the world which use Twitter. As shown on Figure 3, the majority of hashtags of 2017 are written in the Latin alphabet, but a non-negligible fraction of them is written in Korean, Chinese, and Arabic.</p>
 
@@ -135,12 +130,14 @@
         <p>Figure 8 shows one resulting cluster, which is formed of five hashtags which exhibit a similar behaviour: they have all been used a lot for a single day, and have then faded away immediately afterwards. <i>One downside of this method is that, even though it was able to cluster hashtags which share this behavior, it struggled to categorize hashtags which a spread throughout the year</i>.</p>
 
         <p>We have also seen that some hashtags are &ldquo;linked&rdquo;, either because they correspond to the same real-world event or because they are two ways to express the same idea. This prompts another question: can we detect <i>co-occuring</i> hashtags, <i>i.e.</i> hashtags which trend simultaneously? One way to do this is to cluster hashtags once again, but this time with the euclidian distance between the number of time they are used each day instead. This gives the results from Figure 9, which show the usage of <code>#MissUniverse</code>, <code>#Philippines</code> and <code>#Thailand</code> in November 2017. They all trended at the same time around the 26th, which makes sense given that the Miss Universe 2017 contest was held that day, and that Miss Philippines and Miss Thailand were among the contestants.</p>
+      </section>
 
-        <figure>
-          <canvas id="cooccuring-per-day" height="130"></canvas>
-          <figcaption>Timelines of co-occuring <code>#MissUniverse</code>, <code>#Philippines</code> and <code>#Thailand</code>.</figcaption>
-        </figure>
+      <figure>
+        <canvas id="cooccuring-per-day" height="130"></canvas>
+        <figcaption>Timelines of co-occuring <code>#MissUniverse</code>, <code>#Philippines</code> and <code>#Thailand</code>.</figcaption>
+      </figure>
 
+      <section class="centered">
         <p>Now that we have looked at hashtags in general, we would like to dig deeper into the chronology and influence mechanisms behind two hashtags which gained significant traction in 2017: <code>#NotMyPresident</code> and <code>#BalanceTonPorc</code>, the French counterpart of <code>#MeToo</code>.</p>
       </section>
 
