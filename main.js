@@ -62,6 +62,82 @@ function doughnutChart(element, path, label, dataKey, labelKey, colorKey) {
 }
 
 /**
+ * Plots a horizontal bar chart.
+ *
+ * @param {string} element  The DOM element to plot the chart onto.
+ * @param {string} path     The path to the JSON file containing the chart data.
+ * @param {string} label    The label of the chart.
+ * @param {string} barColor The color to use for the bars.
+ * @param {string} dataKey  The key of the data inside the JSON file.
+ * @param {string} labelKey The key of the labels inside the JSON file.
+ */
+function horizontalBarChart(element, path, label, barColor, dataKey, labelKey) {
+    $.getJSON(path, data => {        
+        const config = {
+            type: 'horizontalBar',
+            data: {
+                labels: data.map(r => r[labelKey]),
+                datasets: [{
+                    label: label,
+                    backgroundColor: color(chartColors[barColor]).alpha(0.5).rgbString(),
+                    borderColor: chartColors[barColor],
+                    data: data.map(r => r[dataKey]),
+                    borderWidth: 2,
+                }]
+            },
+            options: {
+                legend: {
+                    display: false,
+                },
+            }
+        };
+      
+        const context = document.getElementById(element).getContext('2d');
+        const chart = new Chart(context, config);
+    });
+}
+
+/**
+ * Plots a multi-dataset bar chart.
+ *
+ * @param {string} element   The DOM element to plot the chart onto.
+ * @param {array}  paths     The paths to the JSON files containing the chart data.
+ * @param {array}  labels    The label of each dataset.
+ * @param {array}  barColors The color to use for the bars of each dataset.
+ * @param {string} dataKey   The key of the data inside the JSON file.
+ * @param {string} labelKey  The key of the labels inside the JSON file.
+ */
+function multiBarChart(element, paths, labels, barColors, dataKey, labelKey) {
+    $.when(...paths.map(path => $.getJSON(path)))
+     .done((...responses) => {
+        const data = responses.map(r => r[0]);
+        const config = {
+            type: 'bar',
+            data: {
+                labels: data[0].map(r => r[labelKey]),
+                datasets: data.map((d, i) => ({
+                    label: labels[i],
+                    backgroundColor: color(chartColors[barColors[i]]).alpha(0.5).rgbString(),
+                    borderColor: chartColors[barColors[i]],
+                    data: d.map(r => r[dataKey]),
+                    borderWidth: 2,
+                })),
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        type: 'logarithmic',
+                    }]
+                }
+            }
+        };
+      
+        const context = document.getElementById(element).getContext('2d');
+        const chart = new Chart(context, config);
+    });
+}
+
+/**
  * Plots a logarithmic bar chart.
  *
  * @param {string} element  The DOM element to plot the chart onto.
@@ -83,11 +159,7 @@ function barChart(element, path, label, barColor, dataKey, labelKey, xAxis) {
                     backgroundColor: color(chartColors[barColor]).alpha(0.5).rgbString(),
                     borderColor: chartColors[barColor],
                     data: data.map(r => r[dataKey]),
-                    type: 'bar',
-                    pointRadius: 0,
-                    fill: false,
-                    lineTension: 0,
-                    borderWidth: 2
+                    borderWidth: 2,
                 }]
             },
             options: {
@@ -118,6 +190,20 @@ $(function() {
         'data/hashtag-alphabets.json',
         'Proportion of use of the alphabet',
         'prop', 'alphabet', 'color',
+    );
+
+    horizontalBarChart(
+        '10-most-used',
+        'data/10-most-used.json',
+        'Number of uses of the hashtag',
+        'blue', 'count', 'tag'
+    );
+    
+    multiBarChart(
+        'bbma-per-day',
+        ['data/bts-day.json', 'data/btsbbmas-day.json'],
+        ['Number of uses of #BTS per day', 'Number of uses of #BTSBBMAs per day'],
+        ['orange', 'purple'], 'count', 'date'
     );
     
     barChart(

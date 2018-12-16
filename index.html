@@ -26,11 +26,11 @@
 
         <p>Since their adoption by Twitter in July of 2009, hashtags have become a defining feature of the platform. They have helped raise awareness of social issues, sparked political debate, and brought people who share common interests together. They have also spread to other social media platforms&nbsp;&ndash;&nbsp;namely Instagram in 2011, Facebook and Google+ in 2013&nbsp;&ndash;&nbsp;and are now used by more than 85% of the top 50 websites by traffic.</p>
 
-        <p>Just as interestingly, they provide valuable metadata about the topic of tweets, which makes them the perfect tool to understand how Twitter trends spread and how they relate to real-world events. This is precisely the point of this article: using a dataset containing 1% of the public tweets of 2017, we will first give an overview of hashtags for the year 2017, look for patterns in the way they spread, and then focus on three major hashtags of 2017&nbsp;&ndash;&nbsp;<code>#NotMyPresident</code>, <code>#Covfefe</code> and <code>#BalanceTonPorc</code>&nbsp;&ndash;&nbsp;to try and identify the key actors and events which helped them spread.</p>
+        <p>Just as interestingly, they provide valuable metadata about the topic of tweets, which makes them the perfect tool to understand how Twitter trends spread and how they relate to real-world events. This is precisely the point of this article: using a dataset containing 1% of the public tweets of 2017, we will first give an overview of hashtags for the year 2017, look for patterns in the way they spread, and then focus on three major hashtags of 2017&nbsp;&ndash;&nbsp;<code>#NotMyPresident</code> and <code>#BalanceTonPorc</code>&nbsp;&ndash;&nbsp;to try and identify the key actors and events which helped them spread.</p>
       </section>
 
       <section class="centered">
-        <h3>Hashtags in 2017.</h3>
+        <h3>An overview of hashtags.</h3>
         <p>Let's start with an overview of hashtags for the year 2017. Our dataset contains around 15 million different hashtags, only 38% of which were used more than once <i>(keep in mind that our dataset is a 1% sample of tweets, so those hashtags might have been used a few hundred times in reality)</i>. More surprisingly, less than 1% of hashtags were used more than 250 times.</p>
         
         <figure>
@@ -69,7 +69,35 @@
       <section class="centered">
         <h3>Finding impactful hashtags.</h3>
 
-        <p>Using the two metrics that we described above&nbsp;&ndash;&nbsp;<i>number of uses</i> of the hashtag and <i>exposition</i> of the hashtag&nbsp;&ndash;&nbsp;we would now like to identify some of the hashtags which had the biggest impact in 2017.</p>
+        <p>Using the two metrics that we described above&nbsp;&ndash;&nbsp;<i>number of uses</i> of the hashtag and <i>exposition</i> of the hashtag&nbsp;&ndash;&nbsp;we would now like to identify some of the hashtags which had the biggest impact in 2017. Let's start by looking at Figure 5, which shows the 10 most used hashtags of 2017.</p>
+      </section>
+
+      <figure>
+        <canvas id="10-most-used" height="100"></canvas>
+        <figcaption>Number of uses of the 10 most used hashtags of 2017.</figcaption>
+      </figure>
+
+      <section class="centered">
+        <p>There are several intersting things to notice here. First of all, we can see that 6 of the 10 most used hashtags are related to music, and K-pop in particular. The hashtags <code>#방탄소년단</code>, <code>#BTS</code> and <code>#BTSBBMAs</code> are a reference to <a href="https://en.wikipedia.org/wiki/BTS_(band)">BTS</a>, a South Korean boy band, and <code>#GOT7</code> also refers to <a href="https://en.wikipedia.org/wiki/Got7">a Korean band</a>&nbsp;&ndash;&nbsp;and not the seventh season of Game of Thrones.</p>
+        
+        <p>The high number of uses of <code>#BBMAs</code>, <code>#BTSBBMAs</code>, <code>#MTVHottest</code> and <code>#PremiosMTVMiaw</code> can easily be explained by the fact that they correspond to three TV shows or contests&nbsp;&ndash;&nbsp;the <a href="https://en.wikipedia.org/wiki/Billboard_Music_Award">Billboard Music Awards</a>, <a href="http://www.mtv.co.uk/hottest">MTV's Hottest Summer Superstar</a> and <a href="https://es.wikipedia.org/wiki/MTV_Millennial_Awards">the MTV Millenial Awards</a>&nbsp;&ndash;&nbsp;which ask the audience to vote for their favorite artists using hashtags. To confirm this, Figure 6 shows the number of uses of the <code>#BTS</code> and <code>#BTSBBMAs</code> hashtags for each day of 2017.</p>
+      </section>
+
+      <figure>
+        <canvas id="bbma-per-day" height="130"></canvas>
+        <figcaption>Number of daily uses of <code>#BTS</code> and <code>#BBBTSBBMAs</code> in 2017.</figcaption>
+      </figure>
+
+      <section class="centered">
+        <p>The first thing to notice in this graph is that <code>#BTS</code> is used steadily troughout the year 2017, but the hashtag peaked&nbsp;&ndash;&nbsp;to ten times its regular use&nbsp;&ndash;&nbsp;between the 21st and 24th of May, coinciding with the BBMA ceremony. We can then see that <code>#BTSBBMAs</code> started trending at the beginning of May, most likely in response to the tweet below, and was used heavily during the entire month up until the day of the ceremony.</p>
+
+        <blockquote class="twitter-tweet" data-cards="hidden" data-lang="fr"><p lang="ko" dir="ltr">[투표] 2017 빌보드 뮤직 어워드 투표가 곧 시작됩니다! <a href="https://twitter.com/hashtag/%EB%B0%A9%ED%83%84%EC%86%8C%EB%85%84%EB%8B%A8?src=hash&amp;ref_src=twsrc%5Etfw">#방탄소년단</a> <a href="https://twitter.com/hashtag/BTS?src=hash&amp;ref_src=twsrc%5Etfw">#BTS</a> 🔥<br>Vote <a href="https://twitter.com/BTS_twt?ref_src=twsrc%5Etfw">@BTS_twt</a> for <a href="https://twitter.com/hashtag/BBMAs?src=hash&amp;ref_src=twsrc%5Etfw">#BBMAs</a> Top Social Artist ✔️<br>(<a href="https://t.co/s8h6yTxEux">https://t.co/s8h6yTxEux</a>)</p>&mdash; BTS_official (@bts_bighit) <a href="https://twitter.com/bts_bighit/status/859067407133925380?ref_src=twsrc%5Etfw">1 mai 2017</a></blockquote>
+
+        <p>Let's look at the other hashtags. After checking the tweets for <code>#izmirescort</code> and <code>#bucaescort</code>, it turns out that these two hashtags are used by bots to promote an escort service in Buca, Turkey. The bots are still active to this day, as can be seen in the tweet below, and are easily recognizable by the fact that they have no followers and almost no followings.</p>
+
+        <blockquote class="twitter-tweet" data-cards="hidden" data-lang="fr"><p lang="nl" dir="ltr">ceevreeleerinee uymaak icin keendileerini yoontaanlaar tukeenip gideerleer <a href="https://twitter.com/hashtag/izmire%C5%BF%C4%8Dort?src=hash&amp;ref_src=twsrc%5Etfw">#izmireſčort</a> <a href="https://twitter.com/hashtag/a%C5%82sancake%C5%BF%C4%8Dort?src=hash&amp;ref_src=twsrc%5Etfw">#ałsancakeſčort</a> <a href="https://t.co/YAUnesQUMo">pic.twitter.com/YAUnesQUMo</a></p>&mdash; gorkem aydogan (@gorkemaydogan2) <a href="https://twitter.com/gorkemaydogan2/status/1074360131893252097?ref_src=twsrc%5Etfw">16 décembre 2018</a></blockquote>
+
+        <p>This shows a flaw in our metric: even though those hashtags had abolutely no impact on Twitter in 2017, the fact that they were used a lot by bots pushed them on top of our list. Let's try a different approach: we define the <i>exposure per tweet</i> as the ratio between the <i>exposure</i> of the hashtag and the number of times it was used. It should intuitively give us a balance between the number of users who saw the hashtag and those who participated, as well as avoid bots&nbsp;&ndash;&nbsp;as they would have a near-zero ratio. <i>To be precise, if a tweet has a ratio greater than the median number of followers of every Twitter user&nbsp;&ndash;&nbsp;325 in our dataset&nbsp;&ndash;&nbsp; then it is likely that it was written by a human.</i></p>
       </section>
 
       <section class="centered">
@@ -101,10 +129,6 @@
         <canvas id="notmypresident-zoom" height="130"></canvas>
         <figcaption>Number of hourly uses of <code>#NotMyPresident</code> around Election Day 2016.</figcaption>
       </figure>  
-
-      <section class="centered">
-        <h3><code>#Covfefe</code>, the presidential typo.</h3>
-      </section>
 
       <section class="centered">
         <h3><code>#BalanceTonPorc</code>, the french counterpart of <code>#MeToo</code>.</h3>
