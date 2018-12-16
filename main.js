@@ -70,8 +70,11 @@ function doughnutChart(element, path, label, dataKey, labelKey, colorKey) {
  * @param {string} barColor The color to use for the bars.
  * @param {string} dataKey  The key of the data inside the JSON file.
  * @param {string} labelKey The key of the labels inside the JSON file.
+ * @param {string} xScale    The type of the Y scale, linear by default.
  */
-function horizontalBarChart(element, path, label, barColor, dataKey, labelKey) {
+function horizontalBarChart(element, path, label, barColor, dataKey, labelKey, xScale) {
+    xScale = xScale || 'linear';
+
     $.getJSON(path, data => {        
         const config = {
             type: 'horizontalBar',
@@ -86,6 +89,11 @@ function horizontalBarChart(element, path, label, barColor, dataKey, labelKey) {
                 }]
             },
             options: {
+                scales: {
+                    xAxes: [{
+                        type: xScale,
+                    }]
+                },
                 legend: {
                     display: false,
                 },
@@ -106,10 +114,10 @@ function horizontalBarChart(element, path, label, barColor, dataKey, labelKey) {
  * @param {array}  barColors The color to use for the bars of each dataset.
  * @param {string} dataKey   The key of the data inside the JSON file.
  * @param {string} labelKey  The key of the labels inside the JSON file.
- * @param {string} scale     The type of the Y scale, logarithmic by default.
+ * @param {string} yScale    The type of the Y scale, logarithmic by default.
  */
-function multiBarChart(element, paths, labels, barColors, dataKey, labelKey, scale) {
-    scale = scale || 'logarithmic';
+function multiBarChart(element, paths, labels, barColors, dataKey, labelKey, yScale) {
+    yScale = yScale || 'logarithmic';
 
     $.when(...paths.map(path => $.getJSON(path)))
      .done((...responses) => {
@@ -129,7 +137,7 @@ function multiBarChart(element, paths, labels, barColors, dataKey, labelKey, sca
             options: {
                 scales: {
                     yAxes: [{
-                        type: scale,
+                        type: yScale,
                     }]
                 }
             }
@@ -263,6 +271,30 @@ $(function() {
         }
     );
 
+    horizontalBarChart(
+        'nmp-pagerank-users',
+        'data/nmp-pagerank-users.json',
+        'PageRank score of the user',
+        'yellow', 'score', 'name',
+        'logarithmic'
+    );
+    
     bokehPlot('nmp-pagerank', 'data/nmp-pagerank.json');
+    
+    barChart(
+        'btp-per-day',
+        'data/btp-day.json',
+        'Number of uses of #BalanceTonPorc',
+        'orange', 'count', 'day', {},
+    );
+
+    horizontalBarChart(
+        'btp-pagerank-users',
+        'data/btp-pagerank-users.json',
+        'PageRank score of the user',
+        'purple', 'score', 'name',
+        'logarithmic'
+    );
+
     bokehPlot('btp-pagerank', 'data/btp-pagerank.json');
 });

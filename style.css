@@ -9,7 +9,6 @@ header {
     padding: 4.5em 0 5em;
     line-height: 1.6;
     background: #f8f8f8;
-    border-bottom: 1px solid #eee;
 }
 
 header h1:before {
@@ -96,7 +95,7 @@ article {
 }
 
 figure {
-    margin: 4em auto;
+    margin: 3em auto 4em;
     text-align: center;
     max-width: 1300px;
     font-style: italic;
@@ -114,3 +113,66 @@ figcaption:before {
 .twitter-tweet {
     margin: 3em auto !important;
 }
+
+.quotation {
+    font-style: italic;
+    color: #666;
+    margin: 2em 3em;
+    padding-left: 1em;
+    border-left: 4px solid #eee;
+    font-size: 1.2em;
+}
+
+.highlighted-tweet {
+    margin-bottom: -2em;
+}
+
+.highlighted-tweet .twitter-tweet {
+    box-shadow: 0 0 8px rgba(0, 0, 0, .06);
+}
+
+.slideshow {
+    height: 250px;
+    margin: 2em auto;
+    position: relative;
+    overflow: hidden;
+    transform: translate3d(0, 0, 0);
+}
+
+.slideshow:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+    box-shadow: inset 200px 0px 100px -50px #fff, 
+                inset -200px 0px 100px -50px #fff;
+}
+  
+.slideshow .mover {
+    display: flex;
+    flex-direction: row;
+    height: 300px;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    transform: translate3d(0, 0, 0);
+    animation: moveSlideshow 120s linear infinite;
+}
+
+.slideshow .mover .twitter-tweet {
+    margin: 0 1em !important;
+}
+ 
+@keyframes moveSlideshow {
+    100% { 
+        transform: translateX(-66.6666%);  
+    }
+}
+  
+  

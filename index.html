@@ -27,7 +27,7 @@
 
         <p>Since their adoption by Twitter in July of 2009, hashtags have become a defining feature of the platform. They have helped raise awareness of social issues, sparked political debate, and brought people who share common interests together. They have also spread to other social media platforms&nbsp;&ndash;&nbsp;namely Instagram in 2011, Facebook and Google+ in 2013&nbsp;&ndash;&nbsp;and are now used by more than 85% of the top 50 websites by traffic.</p>
 
-        <p>Just as interestingly, they provide valuable metadata about the topic of tweets, which makes them the perfect tool to understand how Twitter trends spread and how they relate to real-world events. This is precisely the point of this article: using a dataset containing 1% of the public tweets of 2017, we will first give an overview of hashtags for the year 2017, look for patterns in the way they spread, and then focus on three major hashtags of 2017&nbsp;&ndash;&nbsp;<code>#NotMyPresident</code> and <code>#BalanceTonPorc</code>&nbsp;&ndash;&nbsp;to try and identify the key actors and events which helped them spread.</p>
+        <p>Just as interestingly, they provide valuable metadata about the topic of tweets, which makes them the perfect tool to understand how Twitter trends spread and how they relate to real-world events. This is precisely the point of this article: using a dataset containing 1% of the public tweets of 2017, we will first give an overview of hashtags for the year 2017, look for patterns in the way they are used, and then focus on two major hashtags of 2017&nbsp;&ndash;&nbsp;<code>#NotMyPresident</code> and <code>#BalanceTonPorc</code>&nbsp;&ndash;&nbsp;to try and identify the key actors and events which helped them spread.</p>
       </section>
 
       <section class="centered">
@@ -98,7 +98,7 @@
 
         <blockquote class="twitter-tweet" data-cards="hidden" data-lang="fr"><p lang="nl" dir="ltr">ceevreeleerinee uymaak icin keendileerini yoontaanlaar tukeenip gideerleer <a href="https://twitter.com/hashtag/izmire%C5%BF%C4%8Dort?src=hash&amp;ref_src=twsrc%5Etfw">#izmireſčort</a> <a href="https://twitter.com/hashtag/a%C5%82sancake%C5%BF%C4%8Dort?src=hash&amp;ref_src=twsrc%5Etfw">#ałsancakeſčort</a> <a href="https://t.co/YAUnesQUMo">pic.twitter.com/YAUnesQUMo</a></p>&mdash; gorkem aydogan (@gorkemaydogan2) <a href="https://twitter.com/gorkemaydogan2/status/1074360131893252097?ref_src=twsrc%5Etfw">16 décembre 2018</a></blockquote>
 
-        <p>This shows a flaw in our metric: even though those hashtags had abolutely no impact on Twitter in 2017, the fact that they were used a lot by bots pushed them on top of our list. Let's try a different approach: we define the <i>exposure per tweet</i> as the ratio between the <i>exposure</i> of the hashtag and the number of times it was used. It should intuitively give us a the hashtags which were seen by many people but were not used a lot, which should in particular avoid bots&nbsp;&ndash;&nbsp;as they would have a near-zero ratio. <i>To be precise, if a tweet has a ratio greater than the median number of followers of every Twitter user&nbsp;&ndash;&nbsp;190 in our dataset&nbsp;&ndash;&nbsp; then it is likely that it was written by a human.</i></p>
+        <p>This shows a flaw in our metric: even though those hashtags had abolutely no impact on Twitter in 2017, the fact that they were used a lot by bots pushed them on top of our list. Let's try a different approach: we define the <i>exposure per tweet</i> as the ratio between the <i>exposure</i> of the hashtag and the number of times it was used. It should intuitively give us the hashtags which were seen by many people but were not used a lot, which should in particular avoid bots&nbsp;&ndash;&nbsp;as they would have a near-zero ratio. <i>To be precise, if a tweet has a ratio greater than the median number of followers of every Twitter user&nbsp;&ndash;&nbsp;190 in our dataset&nbsp;&ndash;&nbsp; then it is likely that it was written by a human.</i></p>
       </section>
 
       <figure>
@@ -107,9 +107,9 @@
       </figure>
 
       <section class="centered">
-      <p>Figure 7 shows the top 10 hashtags of 2017 according to this new metric. The first thing to notice is that we have achieved our initial goal: there are no more bot-generated hashtags in this list. This metric, however, doesn't seem to capture &ldquo;impact&rdquo; in the general sense of the word. This can be explained by the fact that, when people feel concerned about a hashtag, they write tweets with it; but in that case our ratio decreases.</p>
+       <p>Figure 7 shows the top 10 hashtags of 2017 according to this new metric. The first thing to notice is that we have achieved our initial goal: there are no more bot-generated hashtags in this list. This metric, however, doesn't seem to capture &ldquo;impact&rdquo; in the general sense. This is explained by the fact that, when people feel concerned about a hashtag, they write tweets with it; but in that case our ratio decreases.</p>
 
-      <p>So, actually, this metric allows us to find &ldquo;hashtag fiascos&rdquo;, i.e. hashtags that were tweeted by accounts with a lot of followers&nbsp;&ndash;&nbsp;usually corporate accounts&nbsp;&ndash;&nbsp;but didn't catch on. This is the case, for instance, of the <code>#FeelTrueEmojiPower</code> hashtag, which was used by Microsoft in November 017 to promote the Xbox, or the <code>#NDTVTopStories</code> hashtag which is used by Indian news channel NDTV.</p>
+        <p>So, actually, this metric allows us to find &ldquo;hashtag fiascos&rdquo;, i.e. hashtags that were tweeted by accounts with a lot of followers&nbsp;&ndash;&nbsp;usually corporate accounts&nbsp;&ndash;&nbsp;but didn't catch on. This is the case, for instance, of the <code>#FeelTrueEmojiPower</code> hashtag, which was used by Microsoft in November 017 to promote the Xbox, or the <code>#NDTVTopStories</code> hashtag used by Indian news channel NDTV.</p>
       </section>
 
       <section class="centered">
@@ -125,27 +125,39 @@
           <li>Or they start becoming popular after some event and grow continuously from there, which happened with <code>#NotMyPresident</code> or <code>#MeToo</code> for instance.</li>
         </ul>
 
-        <p>We can then wonder whether we could quantify which of these patterns hashtags follow, so that we could group the hashtags which behave similarly. A useful tool for this task is <a href="https://en.wikipedia.org/wiki/Dynamic_time_warping">Dynamic time warping</a>, which is a measure of similarity for two temporal sequences&nbsp;&ndash;&nbsp;here the number of times a hashtag is used&nbsp;&ndash;&nbsp;which may vary in speed. We can then cluster hashtags using this measure, <i>e.g.</i> with <a href="https://en.wikipedia.org/wiki/K-means_clustering">K-means</a>.</p>
+        <p>We would now like to quantify which of these patterns hashtags follow, so that we could group those which behave similarly. A useful tool for this task is <a href="https://en.wikipedia.org/wiki/Dynamic_time_warping">Dynamic time warping</a>, which is a measure of similarity for two temporal sequences which may vary in speed. We can then cluster hashtags with this measure, for instance using <a href="https://en.wikipedia.org/wiki/K-means_clustering">K-means</a>.</p>
 
-        <p>We have also seen that some hashtags are &ldquo;linked&rdquo;, either because they correspond to the same real-world event or because they are two ways to express the same idea. That prompts another question: can we detect <i>co-occuring</i> hashtags, <i>i.e.</i> hashtags which trend simultaneously? One way to do this is to cluster hashtags once again, but this time with the euclidian distance between the number of time they are used each day instead. This gives the results from Figure 8, which show the timelines of <code>#MissUniverse</code>, <code>#Philippines</code> and <code>#Thailand</code>, which all trended at the same time around the 26 of November. This makes sense given that the Miss Universe 2017 was held that day, and that Miss Philippines and Miss Thailand were amongst the top 10 contestants.</p>
+        <figure>
+          <img src="plots/similar-behaviours.png" alt="Number of daily uses of similar hashtags.">
+          <figcaption>Number of daily uses <i>(normlized)</i> of several hashtags with the same behaviour.</figcaption>
+        </figure>
+
+        <p>Figure 8 shows one resulting cluster, which is formed of five hashtags which exhibit a similar behaviour: they have all been used a lot for a single day, and have then faded away immediately afterwards. <i>One downside of this method is that, even though it was able to cluster hashtags which share this behavior, it struggled to categorize hashtags which a spread throughout the year</i>.</p>
+
+        <p>We have also seen that some hashtags are &ldquo;linked&rdquo;, either because they correspond to the same real-world event or because they are two ways to express the same idea. This prompts another question: can we detect <i>co-occuring</i> hashtags, <i>i.e.</i> hashtags which trend simultaneously? One way to do this is to cluster hashtags once again, but this time with the euclidian distance between the number of time they are used each day instead. This gives the results from Figure 9, which show the usage of <code>#MissUniverse</code>, <code>#Philippines</code> and <code>#Thailand</code> in November 2017. They all trended at the same time around the 26th, which makes sense given that the Miss Universe 2017 contest was held that day, and that Miss Philippines and Miss Thailand were among the contestants.</p>
 
         <figure>
           <canvas id="cooccuring-per-day" height="130"></canvas>
           <figcaption>Timelines of co-occuring <code>#MissUniverse</code>, <code>#Philippines</code> and <code>#Thailand</code>.</figcaption>
         </figure>
 
-        <p>We would now like to dig deeper into the chronology and influence mechanisms behind two hashtags which gained significant traction in 2017: <code>#NotMyPresident</code> and <code>#BalanceTonPorc</code>, the French counterpart of <code>#MeToo</code>.</p>
+        <p>Now that we have looked at hashtags in general, we would like to dig deeper into the chronology and influence mechanisms behind two hashtags which gained significant traction in 2017: <code>#NotMyPresident</code> and <code>#BalanceTonPorc</code>, the French counterpart of <code>#MeToo</code>.</p>
       </section>
 
       <section class="centered">
         <h3><code>#NotMyPresident</code>, from Election Day to Presidents' Day.</h3>
 
-        <!-- TODO(liautaud): Historical context. -->
+        <p>On the 9th of November 2016 at 2:50 AM Eastern Time, after several months of heated political campain, Democratic candidate Donald Trump became the new president-elect of the United States. This came as a surprise to most of the American public, as both mainstream media and polls assumed that he would loose the election to Hillary Clinton&nbsp;&ndash;&nbsp;his opponent in the race. In his speech that night, he asked Americans to unite.</p>
+
+        <blockquote class="quotation">&ldquo;Now it is time for Americans to bind the wounds of division, [&hellip;] It is time for us to become together as one united people. [&hellip;] I pledge to every citizen of our land that I will be president for all Americans.&rdquo;</blockquote>
+
+        <p>But what happened was quite the opposite: soon after the election, a growing number of Americans started expressing their indignation at the results, and rallied under the slogan &ldquo;Not My President&rdquo;. Consequently, the <code>#NotMyPresident</code> hashtag started trending on Twitter, and it is now being used regularly as a way to disagree with Trump's policies. In this section, we will look at the details of hashtag's chronology, and will try to understand who influenced the &ldquo;Not My President&rdquo; movement.</p>
+
         <p>Interestingly enough, we can find some occurences of <code>#NotMyPresident</code> long before the 2016 presidential election. The slogan emerged during the George W. Bush presidency, and gained traction in 2003 after the invasion of Iraq by a US-led coalition. The first use of the slogan on Twitter can be traced back to February 2009&nbsp;&ndash;&nbsp;at the beginning of the Obama presidency&nbsp;&ndash;&nbsp;with the following tweet from user <code>@RevGreeblie</code>, in reaction to his <a href="https://www.mcclatchydc.com/news/nation-world/national/economy/article24524359.html">visit to Downtown Fort Myers</a>.
           
         <blockquote class="twitter-tweet" data-lang="fr"><p lang="en" dir="ltr">Pobama got talk to 1500 assets slobbers in FL. Sounds like he&#39;s at an old fashioned revival or a rock concert. ugh. <a href="https://twitter.com/hashtag/notmypresident?src=hash&amp;ref_src=twsrc%5Etfw">#notmypresident</a></p>&mdash; Zombie Abe 💀 Lincoln (@RevGreeblie) <a href="https://twitter.com/RevGreeblie/status/1196078710?ref_src=twsrc%5Etfw">10 février 2009</a></blockquote>
 
-        <p>As shown on Figure ?, the hashtag caught on in the middle of 2010, and was used steadly&nbsp;&ndash;&nbsp;around a few hundred times a month&nbsp;&ndash;&nbsp;until October 2016 for everything from <a href="https://twitter.com/ButtonLadyNV/status/10855665519">disagreeing with Obama's policies</a> or <a href="https://twitter.com/Bako13/status/15234600633">protesting against the possible election of Ursula von der Leyen</a> as President of Germany to <a href="https://twitter.com/VladaFoltan/status/589792074586816513">condemning the visit of the the Russian May Victory parade</a> by the President of the Czech Republic.</p>
+        <p>As shown on Figure 10, the hashtag caught on in the middle of 2010, and was used steadly&nbsp;&ndash;&nbsp;around a few hundred times a month&nbsp;&ndash;&nbsp;until October 2016 for everything from <a href="https://twitter.com/ButtonLadyNV/status/10855665519">disagreeing with Obama's policies</a> or <a href="https://twitter.com/Bako13/status/15234600633">protesting against the possible election of Ursula von der Leyen</a> as President of Germany to <a href="https://twitter.com/VladaFoltan/status/589792074586816513">condemning the visit of the the Russian May Victory parade</a> by the President of the Czech Republic.</p>
       </section>
 
       <figure>
@@ -154,7 +166,7 @@
       </figure>
 
       <section class="centered">
-        <p>But let's go back to our main topic: the use of <code>#NotMyPresident</code> as a way to protest against the election of Donald Trump. If we zoom in on November 2016, as shown on Figure ?, we get a better sense of the chronology behind the spread of the hashtag. Around 3:00am CET <i>(which translates to somewhere between 7:00pm and 10:00pm in the United States depending on the timezone)</i>, we start seeing a rise in the number of tweets which use <code>#NotMyPresident</code>. This perfectly matches the time, during Election Night, when predictions started to favor Donald Trump over Hillary Clinton.</p>
+        <p>But let's go back to our main topic: the use of <code>#NotMyPresident</code> as a way to protest against the election of Donald Trump. If we zoom in on November 2016, as shown on Figure 11, we get a better sense of the chronology behind the spread of the hashtag. Around 3:00am CET <i>(which translates to somewhere between 7:00pm and 10:00pm in the United States depending on the timezone)</i>, we start seeing a rise in the number of tweets which use <code>#NotMyPresident</code>. This perfectly matches the time, during Election Night, when predictions started to favor Donald Trump over Hillary Clinton.</p>
       </section>
 
       <figure>
@@ -163,7 +175,9 @@
       </figure>  
     
       <section class="centered">
-          <p>If we take a look at individual tweets around this time, we can see that some people predicted what would happen a few days before, like Twitter user <code>@WesStLixx</code>.</p>
+        <p>The hashtag then remains used consistently during the week, although a little bit less than at the peak of the hashtag on November 9th. Looking closely, we also notice a periodic decrease in the number of uses of the hashtag which happens every day at around 11am CET. This corresponds to the middle of the night in the United States (between 2am and 5am depending on the timezone), which confirms that people tweet less during the night.</p>
+
+        <p>If we take a look at individual tweets around this time, we can see that some people predicted what would happen a few days before, like Twitter user <code>@WesStLixx</code>.</p>
 
         <blockquote class="twitter-tweet" data-lang="fr"><p lang="en" dir="ltr">Me the next two days....<a href="https://twitter.com/hashtag/notmypresident?src=hash&amp;ref_src=twsrc%5Etfw">#notmypresident</a> <a href="https://t.co/ULiXSE9wYo">https://t.co/ULiXSE9wYo</a></p>&mdash; Wesley Castelhano (@WesStLixx) <a href="https://twitter.com/WesStLixx/status/795813339091718144?ref_src=twsrc%5Etfw">8 novembre 2016</a></blockquote>
 
@@ -174,23 +188,98 @@
 
       <section class="centered">
         <h4>Understanding the propagation of influence for <code>#NotMyPresident</code>.</h4>
+
+        <p>We would now like to find out which Twitter users had the most influence in the &ldquo;Not My President&rdquo; movement, either because they wrote popular tweets about it or because they were mentioned a lot in those tweets. To this end, we will build an <i>influence graph</i> whose nodes are all the users of Twitter who were involved with the hashtag, and where we add an edge from user <i>A</i> to user <i>B</i> every time <i>A</i> retweeted or mentioned <i>A</i> in a tweet with the hashtag <code>#NotMyPresident</code>.</p>
+
+        <p>We then use the <a href="https://en.wikipedia.org/wiki/PageRank">PageRank algorithm</a>, which Google uses to evaluate the importance of webpages, to give each user of the graph an <i>influence score</i>. Intuitively, this score will be higher for users which have been retweeted or mentionned by many other important users of the hashtag. We finally isolate the 20 users with the biggest influence score, which gives us Figure 12.</p>
+      </section>
+
+      <figure>
+        <canvas id="nmp-pagerank-users" height="120"></canvas>
+        <figcaption>Most influential users for <code>#NotMyPresident</code> according to their PageRank scores.</figcaption>
+      </figure>
+
+      <section class="centered">
+        <p>Without surprise, <code>@realDonaldTrump</code> has the biggest influence score, as he was mentionned in many of the <code>#NotMyPresident</code> tweets. It is interesting to notice that news outlets were also involved in the movement, either because they tweeted about it or because they were mentioned a lot. Some good example are <code>@CNN</code> and <code>@FoxNews</code>, who never tweeted with <code>#NotMyPresident</code> directly, but were mentioned by many protesters who partly blamed them for the results of the election.</p>
+
+        <blockquote class="twitter-tweet" data-lang="fr"><p lang="en" dir="ltr">A Lot of my professional colleagues &amp; I have NOT watched <a href="https://twitter.com/CNN?ref_src=twsrc%5Etfw">@CNN</a> or <a href="https://twitter.com/MSNBC?ref_src=twsrc%5Etfw">@MSNBC</a> (NEVER <a href="https://twitter.com/FoxNews?ref_src=twsrc%5Etfw">@FoxNews</a>) since Nov 8. They are despicable <a href="https://twitter.com/hashtag/NotMyPresident?src=hash&amp;ref_src=twsrc%5Etfw">#NotMyPresident</a> <a href="https://t.co/wrep8heNe3">https://t.co/wrep8heNe3</a></p>&mdash; vonPinto (@vonPinto1) <a href="https://twitter.com/vonPinto1/status/805231259278606336?ref_src=twsrc%5Etfw">4 décembre 2016</a></blockquote>
+
+        <p>We also notice a few liberal journalists among the most influent users, <i>e.g.</i> <code>@KeithOlbermann</code> and <code>@JoyAnnReid</code>, as well as left-wing politicians like <code>@HillaryClinton</code> or <code>@SenSanders</code>.</p>
+      </section>
+
+      <section class="centered">
+        <p>To better understand the propagation of influence between users of the hashtag, we also plotted the <i>influence graph</i> on Figure 13. Since we can't possibly represent all Twitter users on the same graph, we restricted the visualization to the most influential users and their neighbords. Notice that the size of a user is proportional to its influence score.</p>
+
         <figure>
             <div id="nmp-pagerank"></div>
-            <figcaption>Influence graph of <code>#NotMyPresident</code>, obtained using PageRank.</figcaption>
+            <figcaption>Influence graph of <code>#NotMyPresident</code>.</figcaption>
         </figure>
       </section>
 
       <section class="centered">
-        <h3><code>#BalanceTonPorc</code>, the french counterpart of <code>#MeToo</code>.</h3>
+        <h3><code>#BalanceTonPorc</code>, the French counterpart of <code>#MeToo</code>.</h3>
+
+        <p>Another interesting hashtag to study is <code>#BalanceTonPorc</code>, the French counterpart of <code>#MeToo</code> movement. <code>#MeToo</code> spread virally in October 2017, in the wake of the sexual abuse allegations against Hollywood producer Harvey Weinstein, as a way to denounce the prevalence of sexual assault and harassment against woman. The phrase had actually been used as early as 2006 by Tarana Burke, an American civil rights activist, but it only came to the attention of the general public after the following tweet by American actress Alyssa Milano.</p>
+
+        <blockquote class="twitter-tweet" data-lang="fr"><p lang="en" dir="ltr">If you’ve been sexually harassed or assaulted write ‘me too’ as a reply to this tweet. <a href="https://t.co/k2oeCiUf9n">pic.twitter.com/k2oeCiUf9n</a></p>&mdash; Alyssa Milano (@Alyssa_Milano) <a href="https://twitter.com/Alyssa_Milano/status/919659438700670976?ref_src=twsrc%5Etfw">15 octobre 2017</a></blockquote>
+
+        <p>To understand the chronology of <code>#BalanceTonPorc</code>, we will start by looking at the number of daily uses of the hashtag on Twitter during the end of 2017 on Figure 14.</p>
+      </section>
+
+      <figure>
+        <canvas id="btp-per-day" height="130"></canvas>
+        <figcaption>Number of daily uses of <code>#BalanceTonPorc</code> during the end of 2017.</figcaption>
+      </figure>
+
+      <section class="centered">
+        <p>According to our data, <code>#BalanceTonPorc</code> was actually coined before the rise of <code>#MeToo</code> by Sandra Muller&nbsp;&ndash;&nbsp;<i>a.k.a.</i> <code>@LettreAudio</code>, a French journalist living in New York, with the tweet below. The hashtag spread rapidly, reaching its peak on the 15th of October&nbsp;&ndash;&nbsp;the same day as <code>#MeToo</code>&nbsp;&ndash;&nbsp;which prompted many French woman to share their own experience of sexual violences.</p>
+
+        <div class="highlighted-tweet">
+          <blockquote class="twitter-tweet" data-lang="fr"><p lang="fr" dir="ltr"><a href="https://twitter.com/hashtag/balancetonporc?src=hash&amp;ref_src=twsrc%5Etfw">#balancetonporc</a> !!  toi aussi raconte en donnant le nom et les détails un harcèlent sexuel que tu as connu dans ton boulot. Je vous attends</p>&mdash; Sandra Muller (@LettreAudio) <a href="https://twitter.com/LettreAudio/status/918810180879515653?ref_src=twsrc%5Etfw">13 octobre 2017</a></blockquote>
+        </div>
+      </section>
+
+      <section class="slideshow">
+        <div class="mover">
+          <blockquote class="twitter-tweet" data-lang="fr"><p lang="fr" dir="ltr">Le conseiller du CROUS Brest qui m&#39;appel le soir pour &quot;venir voir comment c&#39;est chez moi&quot; après moult autres avances <a href="https://twitter.com/hashtag/balancetonporc?src=hash&amp;ref_src=twsrc%5Etfw">#balancetonporc</a></p>&mdash; Flora Meur (@fleuramer) <a href="https://twitter.com/fleuramer/status/919660890764476416?ref_src=twsrc%5Etfw">15 octobre 2017</a></blockquote>
+          <blockquote class="twitter-tweet" data-lang="fr"><p lang="fr" dir="ltr"><a href="https://twitter.com/hashtag/BalanceTonPorc?src=hash&amp;ref_src=twsrc%5Etfw">#BalanceTonPorc</a> Le red chef qui demande à voir les invitées potentielles en photo avant de valider parce que &quot;les moches, non merci&quot;</p>&mdash; Aurélia B. (@AureliaBzzz) <a href="https://twitter.com/AureliaBzzz/status/919663933950177280?ref_src=twsrc%5Etfw">15 octobre 2017</a></blockquote>
+          <blockquote class="twitter-tweet" data-lang="fr"><p lang="fr" dir="ltr">Qd un mec sasseoit a cote de toi dans le metro et te carresse la cuisse, tu lui pousses la main il recommence pdt 20min <a href="https://twitter.com/hashtag/balancetonporc?src=hash&amp;ref_src=twsrc%5Etfw">#balancetonporc</a></p>&mdash; une meuf (@ju_zap) <a href="https://twitter.com/ju_zap/status/919674812477399040?ref_src=twsrc%5Etfw">15 octobre 2017</a></blockquote>
+          <blockquote class="twitter-tweet" data-lang="fr"><p lang="fr" dir="ltr">Mon banquier qui me propose de dîner avec lui alors qu&#39;étudiante et pauvre, je sollicite une autorisation de découvert <a href="https://twitter.com/hashtag/balancetonporc?src=hash&amp;ref_src=twsrc%5Etfw">#balancetonporc</a></p>&mdash; chamsz (@chamsz) <a href="https://twitter.com/chamsz/status/919684778663784448?ref_src=twsrc%5Etfw">15 octobre 2017</a></blockquote>
+          <blockquote class="twitter-tweet" data-lang="fr"><p lang="fr" dir="ltr">Un sénateur à qui je parlais boulot et qui me répond &quot;non mais la question c&#39;est quand est ce qu&#39;on baise?&quot; <a href="https://twitter.com/hashtag/balancetonporc?src=hash&amp;ref_src=twsrc%5Etfw">#balancetonporc</a></p>&mdash; Julia Castanier (@JuliaCastanier) <a href="https://twitter.com/JuliaCastanier/status/919641223777935361?ref_src=twsrc%5Etfw">15 octobre 2017</a></blockquote>
+          <blockquote class="twitter-tweet" data-lang="fr"><p lang="fr" dir="ltr"><a href="https://twitter.com/hashtag/balancetonporc?src=hash&amp;ref_src=twsrc%5Etfw">#balancetonporc</a> A ts les porcs qui ont profité du RER bondé pour me toucher.J&#39;espère que vos pieds souffrent encore de mes coups de talons.</p>&mdash; Tyler Rease (@TylerRease) <a href="https://twitter.com/TylerRease/status/919634201825116160?ref_src=twsrc%5Etfw">15 octobre 2017</a></blockquote>
+          <blockquote class="twitter-tweet" data-lang="fr"><p lang="fr" dir="ltr">Mon maître de stage qui m&#39;a dit pour &quot;rire&quot; qu&#39;il me mettrait 20/20 à ma note finale si je le suçais (c&#39;était chez redskin) <a href="https://twitter.com/hashtag/balancetonporc?src=hash&amp;ref_src=twsrc%5Etfw">#balancetonporc</a></p>&mdash; Eloïse Delhaye (@mlleeloise62) <a href="https://twitter.com/mlleeloise62/status/919598554762629120?ref_src=twsrc%5Etfw">15 octobre 2017</a></blockquote>
+          <blockquote class="twitter-tweet" data-lang="fr"><p lang="fr" dir="ltr"><a href="https://twitter.com/hashtag/balancetonporc?src=hash&amp;ref_src=twsrc%5Etfw">#balancetonporc</a> 5 ans sans payer <a href="https://twitter.com/hashtag/pensionsalimentaires?src=hash&amp;ref_src=twsrc%5Etfw">#pensionsalimentaires</a> il propose de régulariser si je le rejoins ds chambre d&#39;hôtel. Frigo est resté vide.</p>&mdash; Stephanie Lamy (@WCM_JustSocial) <a href="https://twitter.com/WCM_JustSocial/status/919596552695492620?ref_src=twsrc%5Etfw">15 octobre 2017</a></blockquote>
+          <blockquote class="twitter-tweet" data-lang="fr"><p lang="fr" dir="ltr">Entendre les rires de ts avoir la nausée et quitter la salle d&#39;opération et ne plus jamais y remettre les pieds j&#39;avais 23a <a href="https://twitter.com/hashtag/Balancetonporc?src=hash&amp;ref_src=twsrc%5Etfw">#Balancetonporc</a></p>&mdash; Muriel Salmona (@memoiretrauma) <a href="https://twitter.com/memoiretrauma/status/919564100610510849?ref_src=twsrc%5Etfw">15 octobre 2017</a></blockquote>
+          <blockquote class="twitter-tweet" data-cards="hidden" data-lang="fr"><p lang="fr" dir="ltr">Mon N+4, marié un enfant, depuis son portable pro. Je suis restée prostrée un long moment. <a href="https://twitter.com/hashtag/balancetonporc?src=hash&amp;ref_src=twsrc%5Etfw">#balancetonporc</a> <a href="https://t.co/bJqCPjXGRx">pic.twitter.com/bJqCPjXGRx</a></p>&mdash; ⭐️Ta Banquière ⭐️ va pas mourir de rire (@tabanquiere) <a href="https://twitter.com/tabanquiere/status/919563491333300225?ref_src=twsrc%5Etfw">15 octobre 2017</a></blockquote>
+          <blockquote class="twitter-tweet" data-lang="fr"><p lang="fr" dir="ltr">En plein openspace, un journaliste passe en revue les femmes de la rédac :<br>&quot;Elle, j&#39;la baise&quot;<br>&quot;Elle, elle a un super cul&quot; <a href="https://twitter.com/hashtag/BalanceTonPorc?src=hash&amp;ref_src=twsrc%5Etfw">#BalanceTonPorc</a></p>&mdash; Amandine Réaux (@AmandineReaux) <a href="https://twitter.com/AmandineReaux/status/919560187824009216?ref_src=twsrc%5Etfw">15 octobre 2017</a></blockquote>
+        </div>
       </section>
 
       <section class="centered">
-          <h4>Understanding the propagation of influence for <code>#BalanceTonPorc</code>.</h4>
-          <figure>
-              <div id="btp-pagerank"></div>
-              <figcaption>Influence graph of <code>#BalanceTonPorc</code>, obtained using PageRank.</figcaption>
-          </figure>
-        </section>
+        <h4>Understanding the propagation of influence for <code>#BalanceTonPorc</code>.</h4>
+
+        <p>Using the same method as for <code>#NotMyPresident</code>, we can try to pinpoint the Twitter users who had the most influence on <code>#BalanceTonPorc</code>. We first build an <i>influene graph</i> for the hashtag, which can be seen on Figure 16, and we use the PageRank algorithm to give each user an <i>influence score</i>. Figure 15 gives a list of the 20 most influential users according to this score.</p>
+      </section>
+      
+      <figure>
+        <canvas id="btp-pagerank-users" height="120"></canvas>
+        <figcaption>Most influential users for <code>#BalanceTonPorc</code> according to their PageRank scores.</figcaption>
+      </figure>
+      
+      <section class="centered">
+        <p>We first notice that <code>@LettreAudio</code>, the originator of the hashtag, is among the most influential users. Like with <code>#NotMyPresident</code>, there are also a majority of news outlets&nbsp;&ndash;&nbsp;<i>e.g.</i> <code>@libe</code>, <code>@lemondefr</code> or <code>@BFMTV</code>&nbsp;&ndash;&nbsp;which wrote articles and tweets about the movement. Below is one such tweet, by <code>@libe</code>, which was retweeted more than 300 times and features the cover of the October 17th issue of Liberation&nbsp;&ndash;&nbsp;which was dedicated to the hashtag.</p>
+
+        <blockquote class="twitter-tweet" data-lang="fr"><p lang="fr" dir="ltr">A la une de Libé demain: «Porcs sur le gril». <a href="https://twitter.com/hashtag/balancetonporc?src=hash&amp;ref_src=twsrc%5Etfw">#balancetonporc</a> <a href="https://t.co/QQHXBAdO8n">https://t.co/QQHXBAdO8n</a> <a href="https://t.co/FEobzpnT5R">pic.twitter.com/FEobzpnT5R</a></p>&mdash; Libération (@libe) <a href="https://twitter.com/libe/status/920007401394360320?ref_src=twsrc%5Etfw">16 octobre 2017</a></blockquote>        
+        
+        <p>The list of influential users also features French journalist <code>@CaronAymericoff</code>, who received backlash after a tweet on October 15th which criticized the hashtag for being speciesist, as well as French politician <code>@LydiaGuirous</code>.</p>
+
+        <blockquote class="twitter-tweet" data-lang="fr"><p lang="fr" dir="ltr">Dommage d&#39;avoir choisi un hashtag spéciste. Il aurait été préférable de choisir <a href="https://twitter.com/hashtag/balancetonharceleur?src=hash&amp;ref_src=twsrc%5Etfw">#balancetonharceleur</a> ou <a href="https://twitter.com/hashtag/balancetonweinstein?src=hash&amp;ref_src=twsrc%5Etfw">#balancetonweinstein</a> <a href="https://t.co/qzt8ulUkSH">https://t.co/qzt8ulUkSH</a></p>&mdash; AymericCaronOfficiel (@CaronAymericoff) <a href="https://twitter.com/CaronAymericoff/status/919487057084518401?ref_src=twsrc%5Etfw">15 octobre 2017</a></blockquote>
+
+        <figure>
+            <div id="btp-pagerank"></div>
+            <figcaption>Influence graph of <code>#BalanceTonPorc</code>, obtained using PageRank.</figcaption>
+        </figure>
+      </section>
 
       <section class="centered">
         <h3>About this project.</h3>
