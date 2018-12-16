@@ -106,8 +106,11 @@ function horizontalBarChart(element, path, label, barColor, dataKey, labelKey) {
  * @param {array}  barColors The color to use for the bars of each dataset.
  * @param {string} dataKey   The key of the data inside the JSON file.
  * @param {string} labelKey  The key of the labels inside the JSON file.
+ * @param {string} scale     The type of the Y scale, logarithmic by default.
  */
-function multiBarChart(element, paths, labels, barColors, dataKey, labelKey) {
+function multiBarChart(element, paths, labels, barColors, dataKey, labelKey, scale) {
+    scale = scale || 'logarithmic';
+
     $.when(...paths.map(path => $.getJSON(path)))
      .done((...responses) => {
         const data = responses.map(r => r[0]);
@@ -126,7 +129,7 @@ function multiBarChart(element, paths, labels, barColors, dataKey, labelKey) {
             options: {
                 scales: {
                     yAxes: [{
-                        type: 'logarithmic',
+                        type: scale,
                     }]
                 }
             }
@@ -184,6 +187,18 @@ function barChart(element, path, label, barColor, dataKey, labelKey, xAxis) {
     });
 }
 
+/**
+ * Plots a Bokeh visualization.
+ *
+ * @param {string} element The DOM element to plot the visualization onto.
+ * @param {string} path    The path to the JSON file containing the chart data.
+ */
+function bokehPlot(element, path) {
+    $.getJSON(path, data => {
+        Bokeh.embed.embed_item(data, element);
+    });
+}
+
 $(function() {
     doughnutChart(
         'hashtag-alphabets',
@@ -198,23 +213,42 @@ $(function() {
         'Number of uses of the hashtag',
         'blue', 'count', 'tag'
     );
-    
+
+    horizontalBarChart(
+        '10-most-expptwt',
+        'data/10-most-expptwt.json',
+        'Exposure per tweet of the hashtag',
+        'blue', 'exposure_per_tweet', 'tag'
+    );
+
     multiBarChart(
         'bbma-per-day',
         ['data/bts-day.json', 'data/btsbbmas-day.json'],
         ['Number of uses of #BTS per day', 'Number of uses of #BTSBBMAs per day'],
         ['orange', 'purple'], 'count', 'date'
     );
+
+    multiBarChart(
+        'cooccuring-per-day',
+        ['data/miss-day.json', 'data/thailand-day.json', 'data/philippines-day.json'],
+        [
+            'Number of uses of #MissUniverse per day',
+            'Number of uses of #Thailand per day',
+            'Number of uses of #Philippines per day'
+        ],
+        ['orange', 'purple', 'blue'], 'count', 'date',
+        'linear'
+    );
     
     barChart(
-        'notmypresident-per-month',
+        'nmp-per-month',
         'data/nmp-month.json',
         'Number of uses of #NotMyPresident',
         'blue', 'count', 'month', {},
     );
 
     barChart(
-        'notmypresident-zoom',
+        'nmp-zoom',
         'data/nmp-zoom.json',
         'Number of uses of #NotMyPresident',
         'orange', 'count', 'date',
@@ -228,4 +262,7 @@ $(function() {
             }
         }
     );
+
+    bokehPlot('nmp-pagerank', 'data/nmp-pagerank.json');
+    bokehPlot('btp-pagerank', 'data/btp-pagerank.json');
 });

@@ -42,6 +42,15 @@ h3 {
     margin: 2.8em 0 1em;
 }
 
+h4 {
+    font-size: 1.3em;
+    margin: 2.8em 0 1em;
+}
+
+.bk-plot-layout {
+    margin: 0 auto;
+}
+
 .centered {
     max-width: 850px;
     margin: 0 auto;
@@ -49,6 +58,10 @@ h3 {
 
 p {
     margin: 1.5em 0;
+}
+
+p.mb0 {
+    margin-bottom: 0;
 }
 
 i {
@@ -67,6 +80,15 @@ code {
     padding: 3px 8px;
     margin: 0 4px;
     border-radius: 4px;
+}
+
+ul {
+    padding-left: 1.5em;
+}
+
+li:before {
+    content: "– ";
+    margin-left: -.8em;
 }
 
 article {

@@ -6,6 +6,7 @@
     <title>Understanding Virality</title>
   
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono|Lora:400,400i,700,700i">
+    <link rel="stylesheet" href="http://cdn.pydata.org/bokeh/release/bokeh-1.0.2.min.css">
     <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="style.css">
   </head>
@@ -97,12 +98,43 @@
 
         <blockquote class="twitter-tweet" data-cards="hidden" data-lang="fr"><p lang="nl" dir="ltr">ceevreeleerinee uymaak icin keendileerini yoontaanlaar tukeenip gideerleer <a href="https://twitter.com/hashtag/izmire%C5%BF%C4%8Dort?src=hash&amp;ref_src=twsrc%5Etfw">#izmireſčort</a> <a href="https://twitter.com/hashtag/a%C5%82sancake%C5%BF%C4%8Dort?src=hash&amp;ref_src=twsrc%5Etfw">#ałsancakeſčort</a> <a href="https://t.co/YAUnesQUMo">pic.twitter.com/YAUnesQUMo</a></p>&mdash; gorkem aydogan (@gorkemaydogan2) <a href="https://twitter.com/gorkemaydogan2/status/1074360131893252097?ref_src=twsrc%5Etfw">16 décembre 2018</a></blockquote>
 
-        <p>This shows a flaw in our metric: even though those hashtags had abolutely no impact on Twitter in 2017, the fact that they were used a lot by bots pushed them on top of our list. Let's try a different approach: we define the <i>exposure per tweet</i> as the ratio between the <i>exposure</i> of the hashtag and the number of times it was used. It should intuitively give us a balance between the number of users who saw the hashtag and those who participated, as well as avoid bots&nbsp;&ndash;&nbsp;as they would have a near-zero ratio. <i>To be precise, if a tweet has a ratio greater than the median number of followers of every Twitter user&nbsp;&ndash;&nbsp;325 in our dataset&nbsp;&ndash;&nbsp; then it is likely that it was written by a human.</i></p>
+        <p>This shows a flaw in our metric: even though those hashtags had abolutely no impact on Twitter in 2017, the fact that they were used a lot by bots pushed them on top of our list. Let's try a different approach: we define the <i>exposure per tweet</i> as the ratio between the <i>exposure</i> of the hashtag and the number of times it was used. It should intuitively give us a the hashtags which were seen by many people but were not used a lot, which should in particular avoid bots&nbsp;&ndash;&nbsp;as they would have a near-zero ratio. <i>To be precise, if a tweet has a ratio greater than the median number of followers of every Twitter user&nbsp;&ndash;&nbsp;190 in our dataset&nbsp;&ndash;&nbsp; then it is likely that it was written by a human.</i></p>
+      </section>
+
+      <figure>
+        <canvas id="10-most-expptwt" height="100"></canvas>
+        <figcaption>Exposure per tweet of the 10 hashtags with the greatest <i>exposure per tweet</i> of 2017.</figcaption>
+      </figure>
+
+      <section class="centered">
+      <p>Figure 7 shows the top 10 hashtags of 2017 according to this new metric. The first thing to notice is that we have achieved our initial goal: there are no more bot-generated hashtags in this list. This metric, however, doesn't seem to capture &ldquo;impact&rdquo; in the general sense of the word. This can be explained by the fact that, when people feel concerned about a hashtag, they write tweets with it; but in that case our ratio decreases.</p>
+
+      <p>So, actually, this metric allows us to find &ldquo;hashtag fiascos&rdquo;, i.e. hashtags that were tweeted by accounts with a lot of followers&nbsp;&ndash;&nbsp;usually corporate accounts&nbsp;&ndash;&nbsp;but didn't catch on. This is the case, for instance, of the <code>#FeelTrueEmojiPower</code> hashtag, which was used by Microsoft in November 017 to promote the Xbox, or the <code>#NDTVTopStories</code> hashtag which is used by Indian news channel NDTV.</p>
       </section>
 
       <section class="centered">
-        <h3>Patterns in the spread of hashtags.</h3>
+        <h3>Patterns in the use of hashtags.</h3>
 
+        <p>Now that we have seen a few ways to identify &ldquo;important&rdquo; hashtags of 2017, we would like to try and understand the patterns that govern their use on Twitter. We have already taken a look at several hashtags, some of which were used at a constant rate throughout the year&nbsp;&ndash;&nbsp;<i>e.g.</i> <code>#BTS</code>&nbsp;&ndash;&nbsp; and others whose use was localized in time, usually around the broadcast of a TV show or contest.</p>
+
+        <p class="mb0">Our dataset essentially shows three possible patterns for hashtags:</p>
+        
+        <ul>
+          <li>They are used at a constant rate throughout the year, usually for thematic hashtags like <code>#food</code>;</li>
+          <li>Or they exhibit &ldquo;spikes&rdquo; of activity, and then slowly fade away, which happens in the case of real-world events&nbsp;&ndash;&nbsp;say the World Cup&nbsp;&ndash;&nbsp;or TV shows which use hashtags to engage with their audience;</li>
+          <li>Or they start becoming popular after some event and grow continuously from there, which happened with <code>#NotMyPresident</code> or <code>#MeToo</code> for instance.</li>
+        </ul>
+
+        <p>We can then wonder whether we could quantify which of these patterns hashtags follow, so that we could group the hashtags which behave similarly. A useful tool for this task is <a href="https://en.wikipedia.org/wiki/Dynamic_time_warping">Dynamic time warping</a>, which is a measure of similarity for two temporal sequences&nbsp;&ndash;&nbsp;here the number of times a hashtag is used&nbsp;&ndash;&nbsp;which may vary in speed. We can then cluster hashtags using this measure, <i>e.g.</i> with <a href="https://en.wikipedia.org/wiki/K-means_clustering">K-means</a>.</p>
+
+        <p>We have also seen that some hashtags are &ldquo;linked&rdquo;, either because they correspond to the same real-world event or because they are two ways to express the same idea. That prompts another question: can we detect <i>co-occuring</i> hashtags, <i>i.e.</i> hashtags which trend simultaneously? One way to do this is to cluster hashtags once again, but this time with the euclidian distance between the number of time they are used each day instead. This gives the results from Figure 8, which show the timelines of <code>#MissUniverse</code>, <code>#Philippines</code> and <code>#Thailand</code>, which all trended at the same time around the 26 of November. This makes sense given that the Miss Universe 2017 was held that day, and that Miss Philippines and Miss Thailand were amongst the top 10 contestants.</p>
+
+        <figure>
+          <canvas id="cooccuring-per-day" height="130"></canvas>
+          <figcaption>Timelines of co-occuring <code>#MissUniverse</code>, <code>#Philippines</code> and <code>#Thailand</code>.</figcaption>
+        </figure>
+
+        <p>We would now like to dig deeper into the chronology and influence mechanisms behind two hashtags which gained significant traction in 2017: <code>#NotMyPresident</code> and <code>#BalanceTonPorc</code>, the French counterpart of <code>#MeToo</code>.</p>
       </section>
 
       <section class="centered">
@@ -117,22 +149,48 @@
       </section>
 
       <figure>
-        <canvas id="notmypresident-per-month" height="130"></canvas>
+        <canvas id="nmp-per-month" height="130"></canvas>
         <figcaption>Number of monthly uses of <code>#NotMyPresident</code> until Nov. 2016.</figcaption>
       </figure>
 
       <section class="centered">
-        <p>But let's go back to our main topic: the use of <code>#NotMyPresident</code> as a way to protest against the election of Donald Trump. If we zoom in on November 2016, as shown on Figure ?, we get a better sense of the chronology behind the spread of the hashtag. Around 3:00am CET <i>(which translates to somewhere between 7:00pm and 10:00pm in the United States depending on the timezone)</i>, we start seeing a rise in the number of tweets which use <code>#NotMyPresident</code>.</p>
+        <p>But let's go back to our main topic: the use of <code>#NotMyPresident</code> as a way to protest against the election of Donald Trump. If we zoom in on November 2016, as shown on Figure ?, we get a better sense of the chronology behind the spread of the hashtag. Around 3:00am CET <i>(which translates to somewhere between 7:00pm and 10:00pm in the United States depending on the timezone)</i>, we start seeing a rise in the number of tweets which use <code>#NotMyPresident</code>. This perfectly matches the time, during Election Night, when predictions started to favor Donald Trump over Hillary Clinton.</p>
       </section>
 
       <figure>
-        <canvas id="notmypresident-zoom" height="130"></canvas>
-        <figcaption>Number of hourly uses of <code>#NotMyPresident</code> around Election Day 2016.</figcaption>
+          <canvas id="nmp-zoom" height="130"></canvas>
+          <figcaption>Number of hourly uses of <code>#NotMyPresident</code> around Election Day 2016.</figcaption>
       </figure>  
+    
+      <section class="centered">
+          <p>If we take a look at individual tweets around this time, we can see that some people predicted what would happen a few days before, like Twitter user <code>@WesStLixx</code>.</p>
+
+        <blockquote class="twitter-tweet" data-lang="fr"><p lang="en" dir="ltr">Me the next two days....<a href="https://twitter.com/hashtag/notmypresident?src=hash&amp;ref_src=twsrc%5Etfw">#notmypresident</a> <a href="https://t.co/ULiXSE9wYo">https://t.co/ULiXSE9wYo</a></p>&mdash; Wesley Castelhano (@WesStLixx) <a href="https://twitter.com/WesStLixx/status/795813339091718144?ref_src=twsrc%5Etfw">8 novembre 2016</a></blockquote>
+
+        <p>But a vast majority of Americans did not see it coming, and started to realize what was about to happen at around 5:00am CET (which translates to the middle of Election Night).</p>
+
+        <blockquote class="twitter-tweet" data-lang="fr"><p lang="en" dir="ltr">Goddamn. Goddamn. Goddamn. I don&#39;t understand. What kind of world are we living in? <a href="https://twitter.com/hashtag/brexit?src=hash&amp;ref_src=twsrc%5Etfw">#brexit</a>  and now this? <a href="https://twitter.com/hashtag/burnitdown?src=hash&amp;ref_src=twsrc%5Etfw">#burnitdown</a> <a href="https://twitter.com/hashtag/notmypresident?src=hash&amp;ref_src=twsrc%5Etfw">#notmypresident</a></p>&mdash; stephan!e lee (@stef_lee) <a href="https://twitter.com/stef_lee/status/796205422453620737?ref_src=twsrc%5Etfw">9 novembre 2016</a></blockquote>
+      </section>
+
+      <section class="centered">
+        <h4>Understanding the propagation of influence for <code>#NotMyPresident</code>.</h4>
+        <figure>
+            <div id="nmp-pagerank"></div>
+            <figcaption>Influence graph of <code>#NotMyPresident</code>, obtained using PageRank.</figcaption>
+        </figure>
+      </section>
 
       <section class="centered">
         <h3><code>#BalanceTonPorc</code>, the french counterpart of <code>#MeToo</code>.</h3>
       </section>
+
+      <section class="centered">
+          <h4>Understanding the propagation of influence for <code>#BalanceTonPorc</code>.</h4>
+          <figure>
+              <div id="btp-pagerank"></div>
+              <figcaption>Influence graph of <code>#BalanceTonPorc</code>, obtained using PageRank.</figcaption>
+          </figure>
+        </section>
 
       <section class="centered">
         <h3>About this project.</h3>
@@ -143,6 +201,7 @@
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="http://cdn.pydata.org/bokeh/release/bokeh-1.0.2.min.js"></script>
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     <script type="text/javascript" src="main.js"></script>
   </body>
