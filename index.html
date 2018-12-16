@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Understanding Virality</title>
   
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono|Lora:400,400i,700,700i">
     <link rel="stylesheet" href="reset.css">
@@ -10,40 +11,115 @@
   </head>
   <body>
     <header>
+      <!-- TODO(liautaud): Slideshow of tweets or hashtags bubbling up. -->
+      <!-- TODO(liautaud): Correct numbering of figures. -->
+      <!-- TODO(liautaud): Replace images with Chart.js graphs. -->
       <div class="centered">
         <h1>Understanding Virality</h1>
         <h2>An analysis of Twitter hashtags and how they spread.</h2>
       </div>
     </header>
 
-    <!--
-      Summary:
-
-      I. Introduction.
-        We're trying to find interesting patterns in Twitter hashtags, first by looking at
-        all hashtags of 2017 and then by selecting a few "interesting" examples.
-
-      II. General statistics about Twitter hashtags.
-        - 
-    -->
-
     <article>
       <section class="centered">
         <h3>Introduction.</h3>
 
-        <p>Suspendisse auctor posuere tincidunt. Ut sit amet tempus metus. Etiam posuere laoreet ligula at bibendum. Nam in erat accumsan purus auctor efficitur quis ullamcorper felis. Integer sagittis porttitor bibendum. Vivamus aliquet, nisl id congue consequat, velit arcu efficitur lacus, nec pharetra justo dolor non metus. Nam finibus neque rhoncus pretium iaculis. Suspendisse faucibus mattis elit a cursus.</p>
-        <p>In finibus, neque quis luctus iaculis, lorem neque lobortis eros, id consectetur turpis dui et orci. Quisque molestie quam in purus rutrum dictum. Etiam nibh tortor, efficitur at molestie eu, consequat sed metus. Suspendisse semper arcu et leo mattis, ut egestas nisi aliquet. Nunc semper nibh sem, ac auctor urna blandit dignissim. Etiam dapibus massa a efficitur lobortis.</p>
-        <p>Nam tincidunt, tellus sit amet sodales semper, metus leo congue mauris, vel viverra massa ligula at turpis. Proin nec malesuada purus. Aliquam ac erat fermentum, suscipit justo sit amet, interdum elit. Sed id blandit nulla. Sed eget ligula tincidunt, tempus mauris ut, pretium velit. Fusce finibus id metus vitae aliquam. Nam scelerisque leo non ultrices scelerisque. Maecenas eleifend, orci eu bibendum porta, urna mi varius libero, eu posuere nulla nulla quis ex. Nunc dapibus et dolor ac condimentum. Sed auctor, nisi ut varius consectetur, lectus dui rhoncus tortor, nec bibendum tortor erat tempus nisi.</p>
-        <p>Fusce gravida mauris sed quam mollis tempus. Etiam consectetur vestibulum maximus. Duis dolor ante, eleifend quis dignissim eget, volutpat eget neque. Proin in ipsum eu urna vehicula congue a quis mi. Etiam porta vestibulum urna egestas suscipit. Donec sed tincidunt nunc. Phasellus orci quam, vehicula ac consequat vel, sagittis id nisl. Quisque ac lectus a magna gravida hendrerit ut sed sem. Duis sodales malesuada augue in vehicula.</p>
+        <p>Since their adoption by Twitter in July of 2009, hashtags have become a defining feature of the platform. They have helped raise awareness of social issues, sparked political debate, and brought people who share common interests together. They have also spread to other social media platforms&nbsp;&ndash;&nbsp;namely Instagram in 2011, Facebook and Google+ in 2013&nbsp;&ndash;&nbsp;and are now used by more than 85% of the top 50 websites by traffic.</p>
+
+        <p>Just as interestingly, they provide valuable metadata about the topic of tweets, which makes them the perfect tool to understand how Twitter trends spread and how they relate to real-world events. This is precisely the point of this article: using a dataset containing 1% of the public tweets of 2017, we will first give an overview of hashtags for the year 2017, look for patterns in the way they spread, and then focus on three major hashtags of 2017&nbsp;&ndash;&nbsp;<code>#NotMyPresident</code>, <code>#Covfefe</code> and <code>#BalanceTonPorc</code>&nbsp;&ndash;&nbsp;to try and identify the key actors and events which helped them spread.</p>
+      </section>
+
+      <section class="centered">
+        <h3>Hashtags in 2017.</h3>
+        <p>Let's start with an overview of hashtags for the year 2017. Our dataset contains around 15 million different hashtags, only 38% of which were used more than once <i>(keep in mind that our dataset is a 1% sample of tweets, so those hashtags might have been used a few hundred times in reality)</i>. More surprisingly, less than 1% of hashtags were used more than 250 times.</p>
+        
+        <figure>
+          <img src="plots/occurences-loglog.png" alt="Distribution of the number of uses of hashtags.">
+          <figcaption>Distribution of the number of uses of hashtags (log-log scale).</figcaption>
+        </figure>
+
+        <p>If we look at the distribution from Figure 1, which uses a logarithmic scale on both axes, we can see that the number of uses of hashtags follows a power law almost perfectly <i>(the noise in the beginning can be explained by the sampling, which penalizes hashtags with few uses)</i>. In particular, we can see that the top 1% of hashtags accounts for more than 75% of all uses of hashtags on Twitter.</p>
+
+        <p>Besides the number of uses of a hashtag, which quantifies how much people participate to a trend, another interesting metric is the number of times people have seen the hashtag on their Twitter feed, which instead quantifies the impact of the trend. This metric, which we call the <i>exposure</i> of the hashtag, can be approximated by the taking all the tweets and retweets which use the hashtag, and summing the number of followers of their authors.</p>
+        
+        <figure>
+          <img src="plots/exposure-logx.png" alt="Distribution of the exposure of hashtags.">
+          <figcaption>Distribution of the exposure of hashtags (x-log scale).</figcaption>
+        </figure>
+
+        <p>If we look at the distribution from Figure 2, we can see that the exposure of hashtags follows a <a href="#">log-normal distribution</a>, which is often found when modeling human interactions. In particular, we can see that the majority of hashtags in our sample are seen between 100 and 10,000 times, while a little less than 25,000 hashtags are seen more than ten million times.</p>
+
+        <!-- TODO(liautaud): Investigate the correlation between exposure and follower count, plus between exposure and number of occurences. -->
+
+        <p>By looking at which alphabet is used in hashtags, we can find some interesting figures regarding the parts of the world which use Twitter. As shown on Figure 3, the majority of hashtags of 2017 are written in the Latin alphabet, but a non-negligible fraction of them is written in Korean, Chinese, and Arabic.</p>
+
+        <figure>
+          <canvas id="hashtag-alphabets" height="130"></canvas>
+          <figcaption>Proportion of alphabets in the hashtags of 2017.</figcaption>
+        </figure>
+
+        <p>We might wonder whether this repartition of alphabets changes when we only consider popular hashtags. Figure 4 gives us the answer: the proportion of hashtags in each alphabet is almost constant, no matter the popularity of the hashtags that we consider. This would imply, in particular, that the mechanisms behind the popularization of hashtags does not depend on the language or the country.</p>
+
+        <figure>
+          <img src="plots/alphabets-threshold.png" alt="Proportion of alphabets for hashtags with varying minimum number of uses.">
+          <figcaption>Proportion of alphabets for hashtags with varying minimum number of uses.</figcaption>
+        </figure>
+      </section>
+
+      <section class="centered">
+        <h3>Finding impactful hashtags.</h3>
+
+        <p>Using the two metrics that we described above&nbsp;&ndash;&nbsp;<i>number of uses</i> of the hashtag and <i>exposition</i> of the hashtag&nbsp;&ndash;&nbsp;we would now like to identify some of the hashtags which had the biggest impact in 2017.</p>
+      </section>
+
+      <section class="centered">
+        <h3>Patterns in the spread of hashtags.</h3>
+
+      </section>
+
+      <section class="centered">
+        <h3><code>#NotMyPresident</code>, from Election Day to Presidents' Day.</h3>
+
+        <!-- TODO(liautaud): Historical context. -->
+        <p>Interestingly enough, we can find some occurences of <code>#NotMyPresident</code> long before the 2016 presidential election. The slogan emerged during the George W. Bush presidency, and gained traction in 2003 after the invasion of Iraq by a US-led coalition. The first use of the slogan on Twitter can be traced back to February 2009&nbsp;&ndash;&nbsp;at the beginning of the Obama presidency&nbsp;&ndash;&nbsp;with the following tweet from user <code>@RevGreeblie</code>, in reaction to his <a href="https://www.mcclatchydc.com/news/nation-world/national/economy/article24524359.html">visit to Downtown Fort Myers</a>.
+          
+        <blockquote class="twitter-tweet" data-lang="fr"><p lang="en" dir="ltr">Pobama got talk to 1500 assets slobbers in FL. Sounds like he&#39;s at an old fashioned revival or a rock concert. ugh. <a href="https://twitter.com/hashtag/notmypresident?src=hash&amp;ref_src=twsrc%5Etfw">#notmypresident</a></p>&mdash; Zombie Abe 💀 Lincoln (@RevGreeblie) <a href="https://twitter.com/RevGreeblie/status/1196078710?ref_src=twsrc%5Etfw">10 février 2009</a></blockquote>
+
+        <p>As shown on Figure ?, the hashtag caught on in the middle of 2010, and was used steadly&nbsp;&ndash;&nbsp;around a few hundred times a month&nbsp;&ndash;&nbsp;until October 2016 for everything from <a href="https://twitter.com/ButtonLadyNV/status/10855665519">disagreeing with Obama's policies</a> or <a href="https://twitter.com/Bako13/status/15234600633">protesting against the possible election of Ursula von der Leyen</a> as President of Germany to <a href="https://twitter.com/VladaFoltan/status/589792074586816513">condemning the visit of the the Russian May Victory parade</a> by the President of the Czech Republic.</p>
+      </section>
+
+      <figure>
+        <canvas id="notmypresident-per-month" height="130"></canvas>
+        <figcaption>Number of monthly uses of <code>#NotMyPresident</code> until Nov. 2016.</figcaption>
+      </figure>
+
+      <section class="centered">
+        <p>But let's go back to our main topic: the use of <code>#NotMyPresident</code> as a way to protest against the election of Donald Trump. If we zoom in on November 2016, as shown on Figure ?, we get a better sense of the chronology behind the spread of the hashtag. Around 3:00am CET <i>(which translates to somewhere between 7:00pm and 10:00pm in the United States depending on the timezone)</i>, we start seeing a rise in the number of tweets which use <code>#NotMyPresident</code>.</p>
+      </section>
+
+      <figure>
+        <canvas id="notmypresident-zoom" height="130"></canvas>
+        <figcaption>Number of hourly uses of <code>#NotMyPresident</code> around Election Day 2016.</figcaption>
+      </figure>  
+
+      <section class="centered">
+        <h3><code>#Covfefe</code>, the presidential typo.</h3>
+      </section>
+
+      <section class="centered">
+        <h3><code>#BalanceTonPorc</code>, the french counterpart of <code>#MeToo</code>.</h3>
       </section>
 
       <section class="centered">
         <h3>About this project.</h3>
 
-        <p>Suspendisse auctor posuere tincidunt. Ut sit amet tempus metus. Etiam posuere laoreet ligula at bibendum. Nam in erat accumsan purus auctor efficitur quis ullamcorper felis. Integer sagittis porttitor bibendum. Vivamus aliquet, nisl id congue consequat, velit arcu efficitur lacus, nec pharetra justo dolor non metus. Nam finibus neque rhoncus pretium iaculis. Suspendisse faucibus mattis elit a cursus.</p>
-        <p>In finibus, neque quis luctus iaculis, lorem neque lobortis eros, id consectetur turpis dui et orci. Quisque molestie quam in purus rutrum dictum. Etiam nibh tortor, efficitur at molestie eu, consequat sed metus. Suspendisse semper arcu et leo mattis, ut egestas nisi aliquet. Nunc semper nibh sem, ac auctor urna blandit dignissim. Etiam dapibus massa a efficitur lobortis. Nam tincidunt, tellus sit amet sodales semper, metus leo congue mauris, vel viverra massa ligula at turpis. Proin nec malesuada purus. Aliquam ac erat fermentum, suscipit justo sit amet, interdum elit. Sed id blandit nulla. Sed eget ligula tincidunt, tempus mauris ut, pretium velit. Fusce finibus id metus vitae aliquam. Nam scelerisque leo non ultrices scelerisque. Maecenas eleifend, orci eu bibendum porta, urna mi varius libero, eu posuere nulla nulla quis ex. Nunc dapibus et dolor ac condimentum. Sed auctor, nisi ut varius consectetur, lectus dui rhoncus tortor, nec bibendum tortor erat tempus nisi.</p>
-        <p>Fusce gravida mauris sed quam mollis tempus. Etiam consectetur vestibulum maximus. Duis dolor ante, eleifend quis dignissim eget, volutpat eget neque. Proin in ipsum eu urna vehicula congue a quis mi. Etiam porta vestibulum urna egestas suscipit. Donec sed tincidunt nunc. Phasellus orci quam, vehicula ac consequat vel, sagittis id nisl. Quisque ac lectus a magna gravida hendrerit ut sed sem. Duis sodales malesuada augue in vehicula.</p>
+        <p>This analysis of Twitter hashtags was carried out as part of the <a href="https://dlab.epfl.ch/teaching/fall2018/cs401/">Applied Data Analysis (CS-401)</a> class at EPFL by Pierre Oechsel, Emiljano Gjiriti and Romain Liautaud. The source code of this page can be found <a href="https://github.com/understanding-virality/understanding-virality.github.io">here</a>, and the code supporting our analysis can be found <a href="https://github.com/understanding-virality/analysis">there</a>.</p>
       </section>
     </article>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <script type="text/javascript" src="main.js"></script>
   </body>
 </html>

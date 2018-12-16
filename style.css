@@ -6,9 +6,9 @@ body {
 }
 
 header {
-    padding: 4.8em 0 5.3em;
+    padding: 4.5em 0 5em;
     line-height: 1.6;
-    background: #f5f5f5;
+    background: #f8f8f8;
     border-bottom: 1px solid #eee;
 }
 
@@ -34,7 +34,7 @@ header h2 {
 }
 
 article {
-    padding: .5em 0 3.5em;
+    margin: 0 0 3.5em;
 }
 
 h3 {
@@ -43,10 +43,52 @@ h3 {
 }
 
 .centered {
-    max-width: 900px;
+    max-width: 850px;
     margin: 0 auto;
 }
 
 p {
-    margin: 1em 0;
+    margin: 1.5em 0;
+}
+
+i {
+    font-style: italic;
+}
+
+p a, p a:active, p a:visited {
+    color: #555;
+}
+
+code {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.88em;
+    background: #f6f6f6;
+    color: #777;
+    padding: 3px 8px;
+    margin: 0 4px;
+    border-radius: 4px;
+}
+
+article {
+	counter-reset: figures;
+}
+
+figure {
+    margin: 4em auto;
+    text-align: center;
+    max-width: 1300px;
+    font-style: italic;
+}
+
+figcaption {
+    margin: 1.5em 0 1em;
+	counter-increment: figures;
+}
+
+figcaption:before {
+	content: 'Figure ' counter(figures) ': ';
+}
+
+.twitter-tweet {
+    margin: 3em auto !important;
 }

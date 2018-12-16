@@ -1,0 +1,8 @@
+[
+    {"alphabet":"Korean","prop":0.093320,"color":"red"},
+    {"alphabet":"Cyrillic","prop":0.004776,"color":"orange"},
+    {"alphabet":"Chinese","prop":0.097385,"color":"yellow"},
+    {"alphabet":"Arabic","prop":0.124376,"color":"green"},
+    {"alphabet":"Japanese","prop":0.039655,"color":"blue"},
+    {"alphabet":"Latin","prop":0.640489,"color":"purple"}
+]
